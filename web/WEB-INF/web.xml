@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <welcome-file-list>
+        <welcome-file>Login_page.jsp</welcome-file>
+        <!-- This will be the default landing page -->
+    </welcome-file-list>
+    <!-- Servlet Configurations -->
+    <servlet>
+        <servlet-name>ProductAnalyzerServlet</servlet-name>
+        <servlet-class>ProductAnalyzerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompareProductServlet</servlet-name>
+        <servlet-class>CompareProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminProductServlet</servlet-name>
+        <servlet-class>AdminProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Register_User_Servlet</servlet-name>
+        <servlet-class>Register_User_Servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>SearchServlet</servlet-class>
+    </servlet>
+    <!-- Session Timeout -->
+    <servlet>
+        <servlet-name>SkinTypeQuizServlet</servlet-name>
+        <servlet-class>SkinTypeQuizServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreatePostServlet</servlet-name>
+        <servlet-class>CreatePostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePostServlet</servlet-name>
+        <servlet-class>DeletePostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>ImageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductSuggestionServlet</servlet-name>
+        <servlet-class>ProductSuggestionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomepageServlet</servlet-name>
+        <servlet-class>HomepageServlet</servlet-class>
+    </servlet>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+</web-app>
