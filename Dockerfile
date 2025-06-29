@@ -1,26 +1,14 @@
-# Stage 1: Build WAR using Maven
-FROM maven:3.9.4-eclipse-temurin-17 AS build
-
-WORKDIR /app
-
-# Copy only pom.xml first to cache dependencies
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
-
-# Now copy source files (only after dependencies are cached)
-COPY . .
-
-# Build WAR (skip tests)
-RUN mvn clean package -DskipTests
-
-# Stage 2: Deploy to Tomcat
+# Use official Tomcat with Java 11 or 17
 FROM tomcat:9.0-jdk17
 
-# Clean default apps
+# Remove the default webapps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy built WAR to ROOT
-COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+# Copy your manually built WAR file into Tomcat
+COPY dist/SKINPAIRS_1.war /usr/local/tomcat/webapps/ROOT.war
 
+# Expose the default Tomcat port
 EXPOSE 8080
+
+# Start Tomcat
 CMD ["catalina.sh", "run"]
