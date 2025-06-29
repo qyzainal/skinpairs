@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 
 /**
  *
@@ -15,23 +12,18 @@ import java.sql.DriverManager;
 
 public class DBConnection {
     public static Connection initializeDatabase() throws Exception {
-        
-        String dbURL = "jdbc:mysql://localhost:3306/skinpairs_db";
-        String username = "qyy";
-        String password = "";
+        // Read from environment variables (Render → Environment tab)
+        String dbURL = System.getenv("DB_URL");
+        String username = System.getenv("DB_USER");
+        String password = System.getenv("DB_PASS");
 
-        
         Class.forName("com.mysql.cj.jdbc.Driver");
-
-        
         Connection connection = DriverManager.getConnection(dbURL, username, password);
 
-       
         connection.setAutoCommit(true);
 
-     
         System.out.println("Database connected successfully to: " + dbURL);
-
         return connection;
     }
 }
+
