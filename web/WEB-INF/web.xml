@@ -50,6 +50,10 @@
         <servlet-name>HomepageServlet</servlet-name>
         <servlet-class>HomepageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DisplayImageServlet</servlet-name>
+        <servlet-class>DisplayImageServlet</servlet-class>
+    </servlet>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

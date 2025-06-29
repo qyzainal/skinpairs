@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import utils.DBConnection;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -20,31 +23,30 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String role = request.getParameter("role");
 
+        HttpSession session = request.getSession();
+        session.removeAttribute("error"); // Clear previous errors
+
         try {
             String hashedPassword = hashPassword(password);
 
-            // Use alias "id" for both adminID and userID
             String query;
             if ("admin".equals(role)) {
                 query = "SELECT adminID AS id FROM skinpairs_admin WHERE username = ? AND password = ?";
             } else if ("user".equals(role)) {
                 query = "SELECT userID AS id, skin_type FROM skinpairs_user WHERE username = ? AND password = ?";
             } else {
-                response.sendRedirect("Login_page.jsp?error=Invalid role");
+                session.setAttribute("error", "Invalid role.");
+                response.sendRedirect("Login_page.jsp");
                 return;
             }
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/skinpairs_db", "qyy", "");
+            try (Connection conn = DBConnection.initializeDatabase();
                  PreparedStatement stmt = conn.prepareStatement(query)) {
 
                 stmt.setString(1, username);
                 stmt.setString(2, hashedPassword);
 
                 try (ResultSet rs = stmt.executeQuery()) {
-                    HttpSession session = request.getSession();
-
                     if (rs.next()) {
                         int userId = rs.getInt("id");
                         session.setAttribute("user_id", userId);
@@ -56,9 +58,8 @@ public class LoginServlet extends HttpServlet {
                             response.sendRedirect("AdminDashboard.jsp");
                         } else {
                             session.setAttribute("adminAccess", false);
-
                             String skinType = rs.getString("skin_type");
-                            if (skinType == null || skinType.isEmpty()) {
+                            if (skinType == null || skinType.trim().isEmpty()) {
                                 response.sendRedirect("skin_quiz.jsp"); // First-time user
                             } else {
                                 session.setAttribute("skinType", skinType);
@@ -71,11 +72,13 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("Login_page.jsp");
                     }
                 }
+
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServletException("Login failed due to an internal error.", e);
+            session.setAttribute("error", "Internal error during login.");
+            response.sendRedirect("Login_page.jsp");
         }
     }
 
