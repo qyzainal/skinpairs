@@ -7,7 +7,8 @@
 <!-- STEP 1: Use a servlet to serve uploaded images from safe disk location -->
 
 <%@ page import="java.sql.*" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="utils.DBConnection" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -160,14 +161,8 @@
             PreparedStatement stmt = null;
             ResultSet rs = null;
 
-            String dbURL = "jdbc:mysql://localhost:3306/skinpairs_db";
-            String dbUser = "qyy";
-            String dbPass = "";
-
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
-
+                conn = DBConnection.initializeDatabase();
                 String sql = "SELECT * FROM discussion_posts ORDER BY created_at DESC";
                 stmt = conn.prepareStatement(sql);
                 rs = stmt.executeQuery();
@@ -192,16 +187,22 @@
                 <button class="btn btn-delete" onclick="confirmDelete(<%= postId %>)">Delete</button>
             </div>
         </div>
-        <% } %>
+        <% 
+                } // end while
+            } catch (Exception e) {
+                out.println("<p>Error: " + e.getMessage() + "</p>");
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (rs != null) rs.close();
+                    if (stmt != null) stmt.close();
+                    if (conn != null) conn.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        %>
     </div>
-    <% 
-        } catch (Exception e) { 
-            out.println("Error: " + e.getMessage()); 
-            e.printStackTrace(); 
-        } finally { 
-            try { if (rs != null) rs.close(); if (stmt != null) stmt.close(); if (conn != null) conn.close(); } catch (Exception ex) {}
-        }
-    %>
 </div>
 
 <!-- Preview Modal -->

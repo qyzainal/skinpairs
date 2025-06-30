@@ -323,9 +323,9 @@
     </div>
     <nav>
         <a href="#">Glossary</a>
-        <a href="#">Community</a>
-        <a href="#">Profile</a>
-        <a href="#">Logout</a>
+        <a href="CommunityPost_User.jsp">Community</a>
+        <a href="Compare_Product.jsp">Compare</a>
+        <a href="LogoutServlet">Logout</a>
     </nav>
 </header>
 
@@ -342,7 +342,6 @@
         <form action="SearchServlet" method="GET">
             <input type="text" name="query" placeholder="Paste ingredients or search" class="search-input" />
             <div class="search-buttons">
-                <button type="button" class="search-btn"><i class="fas fa-image"></i> Image</button>
                 <button type="submit" class="search-btn"><i class="fas fa-clone"></i> Find dupes</button>
                 <button type="button" class="search-btn"><i class="fas fa-sliders-h"></i> Filters</button>
             </div>
