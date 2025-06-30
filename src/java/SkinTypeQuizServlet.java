@@ -83,7 +83,7 @@ public class SkinTypeQuizServlet extends HttpServlet {
         }
 
         request.setAttribute("recommendedProducts", products);
-        request.getRequestDispatcher("SkinTypeResult.jsp").forward(request, response);
+        response.sendRedirect("ChooseFavouriteIngredients.jsp");
     }
 
     private String determineSkinType(String q1, String q2, String q3, String q4, String q5, String q6, String q7) {
