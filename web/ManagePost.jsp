@@ -4,7 +4,6 @@
     Author     : FAQIHAH
 --%>
 
-<!-- STEP 1: Use a servlet to serve uploaded images from safe disk location -->
 
 <%@ page import="java.sql.*" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
