@@ -175,7 +175,7 @@
         %>
         <div class="post-card">
             <% if (imagePath != null && !imagePath.isEmpty()) { %>
-                <img src="ImageServlet?path=<%= imagePath %>" alt="Post Image">
+              <img src="<%= imagePath %>" alt="Post Image">
             <% } %>
             <div class="post-title"><%= title %></div>
             <div class="post-category">Category: <%= category %></div>
