@@ -54,6 +54,10 @@
         <servlet-name>DisplayImageServlet</servlet-name>
         <servlet-class>DisplayImageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadImageServlet</servlet-name>
+        <servlet-class>UploadImageServlet</servlet-class>
+    </servlet>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
